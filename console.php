@@ -1,25 +1,26 @@
 <?php
 
-$json = file_get_contents('https://api.thedogapi.com/v1/breeds');
+if (isset($argv[1])) {
 
-$array = json_decode($json, TRUE);
+    $json = file_get_contents('https://api.thedogapi.com/v1/breeds/search?q=' . $argv[1]);
+    $array = json_decode($json, TRUE);
 
-var_dump($array);
+    foreach ($array as $item) {
+        echo $item["name"] . "\n";
+    }
 
-foreach ($array as $item) {
-    echo $item["name"];
+     
+} else {
+
+    $json = file_get_contents('https://api.thedogapi.com/v1/breeds');
+
+    $array = json_decode($json, TRUE);
+
+    foreach ($array as $item) {
+    echo $item["name"] . "\n";
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 ?>
