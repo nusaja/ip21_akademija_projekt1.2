@@ -1,29 +1,38 @@
 <?php
 
+$action = $argv[1] ?? null;
+$breed = $argv[2] ?? null;
+$search = $argv[3] ?? null;
 
-if (isset($argv[1])) {
+$url = "https://api.the" . $breed . "api.com/v1/breeds";
 
-    if ($argv[1] === "list") {
 
-        $json = @file_get_contents('https://api.thedogapi.com/v1/breeds');
+switch ($action) {
+    case "list":
+        $array = callApi($url);
+        listNames($array);
+        break;
+    case "search":
+        if (isset($search) && is_string($search) && ctype_alpha($search) && strlen($search) > 1 && strlen($search < 100)) {
+            $array = callApi($url . '/search?q=' . $search);
+            listNames($array); 
+        } else {
+            echo "Invalid search!\n";
+        }
+        break;
+    default:
+        echo "Type in list or search!\n";
 
-        $array = decode($json);
+}
+
+
+function callApi($url) {
+
+    $json = @file_get_contents($url); 
     
-        listNames($array); 
-    
-    } elseif ($argv[1] === "search" && isset($argv[2]) && is_string($argv[2]) && ctype_alpha($argv[2]) && strlen($argv[2]) > 1 && strlen($argv[2] < 100)) {
+    $array = decode($json);
 
-        $json = file_get_contents('https://api.thedogapi.com/v1/breeds/search?q=' . $argv[2]);
-
-        $array = decode($json);
-    
-        listNames($array); 
-
-    }
-
-} else {
-    
-    echo "Type in list or search!\n";
+    return $array;
 
 }
 
