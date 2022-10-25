@@ -1,19 +1,46 @@
 <?php
 
 $action = $argv[1] ?? null;
-$breed = $argv[2] ?? null;
+$type = $argv[2] ?? null;
 $search = $argv[3] ?? null;
+
+define("TYPE_DOG", "dog");
+define("TYPE_CAT", "cat");
+define("TYPE_BOTH", "both");
+
+define("TYPES", [
+    TYPE_CAT,
+    TYPE_DOG, 
+    TYPE_BOTH
+  ]);
+  
+
+if (!in_array($type, TYPES)) {
+    echo "Type invalid.\n";
+    die;
+} 
 
 
 switch ($action) {
     case "list":
-        $array = getData($breed, "");
-        listNames($array);
+        try {
+            $data = getData($type);
+            listNames($data);    
+        } catch (\Exception $e) {
+            echo $e->getMessage() . "\n";
+            die;
+        }
+        
         break;
     case "search":
         if (isset($search) && is_string($search) && ctype_alpha($search) && strlen($search) > 1 && strlen($search < 100)) {
-            $array = getData($breed, "/search?q=" . $search);
-            listNames($array); 
+            try {
+                $data = getData($type, "/search?q=" . $search);
+                listNames($data);    
+            } catch (\Exception $e) {
+                echo $e->getMessage() . "\n";
+                die;
+            }
         } else {
             echo "Invalid search!\n";
         }
@@ -24,75 +51,72 @@ switch ($action) {
 }
 
 
-function getData($breed, $query) {
+function getData(string $type, ?string $query = null) : array {
     
-    if ($breed === "both") {
+    if ($type === TYPE_BOTH) {
 
         return array_merge(
-            callApi("dog", $query), 
-            callApi("cat", $query)
+            callApi(TYPE_DOG, $query), 
+            callApi(TYPE_CAT, $query)
         );
     }
 
-    return callApi($breed, $query);
+    return callApi($type, $query);
 
 }
 
-function callApi($breed, $query) {
+function callApi(string $type, string $query) : array {
 
-    $url = "https://api.the" . $breed . "api.com/v1/breeds" . $query;
+    $url = "https://api.the" . $type . "api.com/v1/breeds" . $query;
 
     $json = @file_get_contents($url); 
-    
-    $array = decode($json);
-
-    foreach ($array as $key => $value) {
-        $array[$key]["type"] = $breed; 
-    }
-
-    return $array;
-
-}
-
-
-function decode($json) {
 
     if ($json === false) {
-        echo "Error!\n";
-        die;
+        throw new Exception("API returned invalid data.");
+    }
+    
+    $data = decode($json);
+
+    foreach ($data as $key => $value) {
+        $data[$key]["type"] = $type; 
     }
 
-    $array = json_decode($json, TRUE);
-
-
-    if ($array === null) {
-        echo "Incorrect data!\n"; 
-        die;
-    }
-
-    return $array;
+    return $data;
 
 }
 
-function listNames($array) {
 
-    $newArray = [];
+function decode(string $json) : array {
 
-    foreach ($array as $value) {
-        $newArray[$value["name"]] = $value;
+    $data = json_decode($json, TRUE);
+
+    if ($data === null) {
+        throw new Exception("Incorrect data.");
     }
 
-    ksort($newArray);
+    return $data;
 
-    foreach ($newArray as $value) {
-        if ($value["type"] === "dog") {
+}
+
+function listNames(array $data) : void {
+
+    $newData = [];
+
+    foreach ($data as $value) {
+        $newData[$value["name"]] = $value;
+    }
+
+    ksort($newData);
+
+    foreach ($newData as $value) {
+        if ($value["type"] === TYPE_DOG) {
             $type = "(d) ";
         } else {
             $type = "(c) ";
         }
     }
 
-    foreach ($newArray as $item) {
+    foreach ($newData as $item) {
         echo $type . $item["name"] . "\n";
         }
 
