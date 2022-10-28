@@ -1,6 +1,8 @@
 <?php
 
 require_once('lib/model.php');
+require_once('views/consoleView.php');
+
 
 $action = $argv[1] ?? null;
 $type = $argv[2] ?? null;
@@ -49,31 +51,6 @@ switch ($action) {
         break;
     default:
         echo "Type in list or search!\n";
-
-}
-
-
-function listNames(array $data) : void {
-
-    $newData = [];
-
-    foreach ($data as $value) {
-        $newData[$value["name"]] = $value;
-    }
-
-    ksort($newData);
-
-    foreach ($newData as $value) {
-        if ($value["type"] === TYPE_DOG) {
-            $type = "(d) ";
-        } else {
-            $type = "(c) ";
-        }
-    }
-
-    foreach ($newData as $item) {
-        echo $type . $item["name"] . "\n";
-        }
 
 }
 

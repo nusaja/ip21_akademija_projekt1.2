@@ -1,6 +1,6 @@
 <?php
 
-// * MODEL SE UKVARJA SAMO S PRIDOBIVANJEM PODATKOV *
+// * MODEL SE UKVARJA SAMO S PRIDOBIVANJEM IN OBDELAVO PODATKOV *
 
 function getData(string $type, ?string $query = null) : array {
     
