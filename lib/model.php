@@ -16,7 +16,7 @@ function getData(string $type, ?string $query = null) : array {
 
 }
 
-function callApi(string $type, string $query) : array {
+function callApi(string $type, ?string $query = null) : array {
 
     $url = "https://api.the" . $type . "api.com/v1/breeds" . $query;
 
