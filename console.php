@@ -8,6 +8,14 @@ $action = $argv[1] ?? null;
 $type = $argv[2] ?? null;
 $search = $argv[3] ?? null;
 
+define("ACTION_LIST", "list");
+define("ACTION_SEARCH", "search");
+
+define("ACTIONS", [
+    ACTION_LIST,
+    ACTION_SEARCH
+]);
+
 define("TYPE_DOG", "dog");
 define("TYPE_CAT", "cat");
 define("TYPE_BOTH", "both");
@@ -18,6 +26,11 @@ define("TYPES", [
     TYPE_BOTH
   ]);
   
+
+if (!in_array($action, ACTIONS)) {
+    echo "Action invalid.\n";
+    die;
+} 
 
 if (!in_array($type, TYPES)) {
     echo "Type invalid.\n";
@@ -50,7 +63,7 @@ switch ($action) {
         }
         break;
     default:
-        echo "Type in list or search!\n";
+        echo "Type in list or search!\n"; 
 
 }
 
