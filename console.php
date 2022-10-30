@@ -3,6 +3,9 @@
 require_once('lib/model.php');
 require_once('views/consoleView.php');
 
+$view = new ConsoleView();
+
+
 
 $action = $argv[1] ?? null;
 $type = $argv[2] ?? null;
@@ -42,7 +45,7 @@ switch ($action) {
     case "list":
         try {
             $data = getData($type);
-            listNames($data);    
+            $view->listNames($data);    
         } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
             die;
@@ -53,7 +56,7 @@ switch ($action) {
         if (isset($search) && is_string($search) && ctype_alpha($search) && strlen($search) > 1 && strlen($search < 100)) {
             try {
                 $data = getData($type, "/search?q=" . $search);
-                listNames($data);    
+                $view->listNames($data);    
             } catch (\Exception $e) {
                 echo $e->getMessage() . "\n";
                 die;
