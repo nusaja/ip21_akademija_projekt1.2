@@ -45,6 +45,11 @@ function decode(string $json) : array {
         throw new Exception("Incorrect data.");
     }
 
+    if (empty($data)) {
+        throw new Exception("No results.");
+    }
+
+
     return $data;
 
 }

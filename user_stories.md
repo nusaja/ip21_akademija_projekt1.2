@@ -26,6 +26,7 @@ Feature: List all breeds
     When I enter the prompt
     Then I will get an error "Type invalid."
 
+
 Feature: Search through breeds
 
   Scenario: I want a list of all breed names that relate to my search query
@@ -48,19 +49,35 @@ Feature: Search through breeds
 
   Scenario: I want a list of all/cat/dog breed names that relate to my search query
     Given that I exclude or incorrectly type in the action "search"
-    When I enter the prompt
+    When I type in the prompt
     Then I will get an error "Action invalid."
 
   Scenario: I want a list of all cat breed names that relate to my search query
     Given that I exclude or incorrectly type in the type "cat"/"dog"/"both"
-    When I type the prompt 
+    When I type in the prompt 
     Then I will get an error "Type invalid."
 
   Scenario: I want a list of all cat breed names that relate to my search query
-    Given that I exclude or incorrectly type in the search query
-    When I type the prompt 
-    Then I will get an error "Invalid search!" 
+    Given that I my search query is valid but does not match any breed name 
+    When I type in the prompt 
+    Then I will get an error "No results." 
 
+    ###########################################################################
+
+  Scenario: I want a list of all breed names that relate to my search query
+    Given that my search query is longer than 100 characters
+    When I type in the prompt 
+    Then I will get a an error "Invalid search!"
+
+  Scenario: I want a list of all breed names that relate to my search query
+    Given that my search query is shorter than 1 character
+    When I type in the prompt 
+    Then I will get an error "Invalid search!" 
+    
+  Scenario: I want a list of all breed names that relate to my search query
+    Given that my search query contains non alphabetical characters
+    When I type in the prompt 
+    Then I will get a an error "Invalid search!"
 
     
 
