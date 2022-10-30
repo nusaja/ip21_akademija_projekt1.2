@@ -4,6 +4,7 @@ require_once('lib/model.php');
 require_once('views/consoleView.php');
 
 $view = new ConsoleView();
+$model = new ConsoleModel();
 
 
 
@@ -44,7 +45,7 @@ if (!in_array($type, TYPES)) {
 switch ($action) {
     case "list":
         try {
-            $data = getData($type);
+            $data = $model->getData($type);
             $view->listNames($data);    
         } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
@@ -55,7 +56,7 @@ switch ($action) {
     case "search":
         if (isset($search) && is_string($search) && ctype_alpha($search) && strlen($search) > 1 && strlen($search < 100)) {
             try {
-                $data = getData($type, "/search?q=" . $search);
+                $data = $model->getData($type, "/search?q=" . $search);
                 $view->listNames($data);    
             } catch (\Exception $e) {
                 echo $e->getMessage() . "\n";
@@ -64,10 +65,6 @@ switch ($action) {
         } else {
             echo "Invalid search!\n";
         }
-        break;
-    default:
-        echo "Type in list or search!\n"; 
-
 }
 
 ?>
