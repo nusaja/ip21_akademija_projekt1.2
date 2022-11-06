@@ -1,7 +1,15 @@
 <?php
 
+require_once './vendor/autoload.php';
 require_once('lib/model.php');
 require_once('views/consoleView.php');
+
+$loader = new \Twig\Loader\FilesystemLoader('./views/templates');
+$twig = new \Twig\Environment($loader, [
+    //'cache' => './cache',
+    'debug' => true,
+]);
+$twig->addExtension(new \Twig\Extension\DebugExtension());
 
 $view = new ConsoleView();
 $model = new ConsoleModel();
