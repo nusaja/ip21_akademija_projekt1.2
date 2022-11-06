@@ -20,11 +20,8 @@ class ConsoleView {
             } else {
                 $type = "(c) ";
             }
+            echo $type . $value["name"] . "\n";
         }
-
-        foreach ($newData as $item) {
-            echo $type . $item["name"] . "\n";
-            }
 
     }
 
