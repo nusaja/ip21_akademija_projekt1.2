@@ -4,7 +4,7 @@
 
 class ConsoleModel {
 
-    function getData(string $type, ?string $query = null) : array {
+    public function getData(string $type, ?string $query = null) : array {
         
         if ($type === TYPE_BOTH) {
 
@@ -15,6 +15,22 @@ class ConsoleModel {
         }
 
         return $this->callApi($type, $query);
+
+    }
+
+    public function getSortedData(string $type, ?string $query = null) : array {
+
+        $data = $this->getData($type, $query); 
+
+        $newData = [];
+
+        foreach ($data as $value) {
+            $newData[$value["name"]] = $value;
+        }
+
+        ksort($newData);
+
+        return $newData;
 
     }
 

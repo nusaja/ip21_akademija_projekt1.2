@@ -53,8 +53,9 @@ if (!in_array($type, TYPES)) {
 switch ($action) {
     case "list":
         try {
-            $data = $model->getData($type);
-            $view->listNames($data);    
+            $data = $model->getSortedData($type);
+            // $view->listNames($data);
+            echo $twig->render('list.console.twig', ['data' => $data]);    
         } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
             die;
