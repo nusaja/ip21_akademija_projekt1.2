@@ -1,3 +1,8 @@
 {% for entry in data %}
-{% if entry.type == 'dog' %} (d) {% else %} (c) {% endif %} {{ entry.name }} 
+{% if entry.type == 'dog' %}(DOG) {% else %}(CAT) {% endif %}{{ entry.name }} 
+{% if isVerbose %}{% if entry.temperament %}      TEMPERAMENT: {{ entry.temperament }}{% endif %}  
+{% if entry.type == 'dog' %} {% if entry.bred_for %}     BRED FOR: {{ entry.bred_for}} {% endif %}{% else %}{% if entry.desription %}      DESCRIPTION: {{entry.description}} {% endif %}{% endif %}
+
+
+{% endif %}
 {% endfor %}

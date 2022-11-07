@@ -49,13 +49,19 @@ if (!in_array($type, TYPES)) {
     die;
 } 
 
+if (($argv[$argc - 1] === "-v")) {
+    $isVerbose = true; 
+} else {
+    $isVerbose = false; 
+}
+
 
 switch ($action) {
     case "list":
         try {
             $data = $model->getSortedData($type);
             // $view->listNames($data);
-            echo $twig->render('list.console.twig', ['data' => $data]);    
+            echo $twig->render('list.console.twig', ['data' => $data, 'isVerbose' => $isVerbose]);    
         } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
             die;
@@ -66,7 +72,8 @@ switch ($action) {
         if (isset($search) && is_string($search) && ctype_alpha($search) && strlen($search) > 1 && strlen($search < 100)) {
             try {
                 $data = $model->getData($type, "/search?q=" . $search);
-                $view->listNames($data);    
+                // $view->listNames($data); 
+                echo $twig->render('list.console.twig', ['data' => $data, 'isVerbose' => $isVerbose]);   
             } catch (\Exception $e) {
                 echo $e->getMessage() . "\n";
                 die;
