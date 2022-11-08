@@ -12,9 +12,7 @@ $twig = new \Twig\Environment($loader, [
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 $view = new ConsoleView();
-$model = new ConsoleModel();
-
-
+$model = new Model();
 
 $action = $argv[1] ?? null;
 $type = $argv[2] ?? null;

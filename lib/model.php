@@ -2,7 +2,7 @@
 
 // * MODEL SE UKVARJA SAMO S PRIDOBIVANJEM IN OBDELAVO PODATKOV *
 
-class ConsoleModel {
+class Model {
 
     public function getData(string $type, ?string $query = null) : array {
         
