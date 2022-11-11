@@ -1,6 +1,14 @@
 <?php 
 
+require_once './vendor/autoload.php';
 require_once('lib/model.php');
+
+$loader = new \Twig\Loader\FilesystemLoader('./views/templates');
+$twig = new \Twig\Environment($loader, [
+    //'cache' => './cache',
+    'debug' => true,
+]);
+$twig->addExtension(new \Twig\Extension\DebugExtension());
 
 $model = new Model();
 
@@ -17,4 +25,5 @@ define("TYPES", [
 $type = "both";
 
 $data = $model->getSortedData($type);
-var_dump($data); 
+
+echo $twig->render('list.html.twig', ['data' => $data]);    
