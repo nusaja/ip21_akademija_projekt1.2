@@ -3,38 +3,15 @@
 
 <head>
 
-    <link rel="stylesheet" href="/css/style.css">  
+    <link rel="stylesheet" href="/style.css">  
     <meta charset="utf-8">
 
     <title>My Webpage</title>
 </head>
 
-<style>
-    html, body {
-        height: 100%;
-    }
-
-    html {
-        display: table;
-        margin: auto;
-    }
-
-    body {
-        display: table-cell;
-        vertical-align: middle;
-        font-size: 20px;
-        text-align: center;
-
-    }
-
-    ul {
-        list-style: none;
-        line-height: 1.6;
- 
-    }
-</style>
-
 <body>
+
+    <h1>List of cat and dog breeds</h1>
 
     <ul id="breeds">
     {% for entry in data %}
