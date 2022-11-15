@@ -16,7 +16,7 @@
     <ul id="breeds">
     {% for entry in data %}
 
-        <li>* {{ entry.name }} *</li>
+        <li>{% if entry.type == "dog"%}<img src = "/dog-alt.svg"/>  {% else %}<img src = "/cat-alt-2.svg">{% endif %}{{ entry.name }}</li>
 
     {% endfor %}
     </ul>

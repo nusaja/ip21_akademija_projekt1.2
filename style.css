@@ -24,3 +24,8 @@ ul {
 h1 {
     font-weight: bold;
 }
+
+img {
+    height: 20px;
+    width: 20px; 
+}
